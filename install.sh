@@ -28,7 +28,7 @@ chmod a+x $SCRIPT_DIR/service/log/run
 chmod 755 $SCRIPT_DIR/service/log/run
 
 # create sym-link to run script in deamon
-ln -s $SCRIPT_DIR/service /service/$SERVICE_NAME
+ln -sfn $SCRIPT_DIR/service /service/$SERVICE_NAME
 # add install-script to rc.local to be ready for firmware update
 filename=/data/rc.local
 if [ ! -f $filename ]
@@ -40,7 +40,11 @@ then
 fi
 
 
-grep -qxF  || echo "exec multilog t s153600 n2 /var/log/$SERVICE_NAME"
-grep -qxF "exec multilog t s153600 n2 /var/log/$SERVICE_NAME" $SCRIPT_DIR/service/log/run || echo exec multilog t s153600 n2 /var/log/$SERVICE_NAME >> $SCRIPT_DIR/service/log/run
+grep -qxF \
+    "exec multilog t s153600 n2 /var/log/$SERVICE_NAME" \
+    $filename \
+    || echo "exec multilog t s153600 n2 /var/log/$SERVICE_NAME" >> $filename
+grep -qxF "exec multilog t s153600 n2 /var/log/$SERVICE_NAME" $SCRIPT_DIR/service/log/run \
+    || echo exec multilog t s153600 n2 /var/log/$SERVICE_NAME >> $SCRIPT_DIR/service/log/run
 
 grep -qxF "$SCRIPT_DIR/install.sh" $filename || echo "/bin/bash $SCRIPT_DIR/install.sh" >> $filename
