@@ -5,7 +5,7 @@ SERVICE_NAME=$(basename $SCRIPT_DIR)
 
 chmod a-x $SCRIPT_DIR/service/run
 
-if [ -f /service/$SERVICE_NAME ]
+if [ -L /service/$SERVICE_NAME ]
 then
         rm /service/$SERVICE_NAME
 fi
