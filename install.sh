@@ -7,10 +7,6 @@ if [ ! -f $SCRIPT_DIR/config.ini ]; then
     exit 1
 fi
 
-if [ -f $SCRIPT_DIR/current.log ]; then
-    rm $SCRIPT_DIR/current.log*
-fi
-
 # set permissions for script files
 chmod a+x $SCRIPT_DIR/install.sh
 chmod 744 $SCRIPT_DIR/install.sh
